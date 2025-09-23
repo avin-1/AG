@@ -19,14 +19,14 @@ export default function ChatBox({ messages = [], onSend }) {
           </div>
         ))}
       </div>
-      <form onSubmit={submit} className="flex items-center gap-3">
+      <form onSubmit={submit} className="flex items-center gap-4">
         <input
-          className="flex-grow bg-[#3c2a58] border border-transparent rounded-lg px-4 py-3 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-[#5b457a]"
+          className="flex-grow bg-gray-800 border border-gray-700 rounded-lg px-4 py-4 text-white text-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300 hover:border-indigo-500"
           placeholder="Type your message..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <button className="rounded-lg bg-[#5b457a] px-5 py-3 text-white font-semibold hover:bg-opacity-90 shadow-lg transition-colors">Send</button>
+        <button className="rounded-lg bg-indigo-600 px-6 py-4 text-white font-semibold hover:bg-indigo-700 shadow-lg transition-all duration-300 transform hover:scale-105">Send</button>
       </form>
     </div>
   )

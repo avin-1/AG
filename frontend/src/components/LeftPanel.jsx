@@ -21,10 +21,10 @@ export default function LeftPanel({
         <span>FloatChat</span>
       </div>
 
-      <div className="flex flex-col gap-4 mb-6">
-        <div className="relative">
+      <div className="flex gap-4 mb-8">
+        <div className="relative flex-1">
           <select
-            className="appearance-none w-full bg-[#3c2a58] border border-transparent rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#5b457a]"
+            className="appearance-none w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-4 text-white text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300 hover:border-indigo-500"
             value={profession}
             onChange={(e) => onChangeProfession(e.target.value)}
           >
@@ -34,14 +34,14 @@ export default function LeftPanel({
             <option value="policymaker">Policymaker</option>
             <option value="student">Student</option>
           </select>
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
-            <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-400">
+            <svg className="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
           </div>
         </div>
 
-        <div className="relative">
+        <div className="relative flex-1">
           <select
-            className="appearance-none w-full bg-[#3c2a58] border border-transparent rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#5b457a]"
+            className="appearance-none w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-4 text-white text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300 hover:border-indigo-500"
             value={location}
             onChange={(e) => onChangeLocation(e.target.value)}
           >
@@ -49,8 +49,8 @@ export default function LeftPanel({
             <option value="pune">Pune</option>
             <option value="mumbai">Mumbai</option>
           </select>
-          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
-            <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-400">
+            <svg className="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
           </div>
         </div>
       </div>
