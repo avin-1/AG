@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+}
+
+:root {
+  --fc-bg-1: 75 0% 15%;
+  --fc-card: 0 0% 100%;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+  background: radial-gradient(1200px 800px at -10% -10%, rgba(124,77,255,0.35), transparent 60%), radial-gradient(1000px 600px at 110% 0%, rgba(83,109,254,0.25), transparent 60%), linear-gradient(180deg, #0b0518 0%, #120b2a 100%);
+}
+
+.card-shadow {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12), 0 6px 12px rgba(0,0,0,0.06);
+}
+

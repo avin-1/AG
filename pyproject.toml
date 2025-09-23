@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "floatchat"
+version = "0.1.0"
+description = "FloatChat - ARGO Data Explorer"
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "argopy==0.1.13",
+    "pandas==2.2.2",
+    "xarray==2023.10.0",
+    "psycopg2-binary==2.9.9",
+    "chromadb==0.4.24",
+    "langchain==0.3.0",
+    "fastapi==0.111.0",
+    "uvicorn==0.29.0",
+    "streamlit==1.35.0",
+    "plotly==5.22.0",
+    "folium==0.15.1",
+    "sentence-transformers==2.7.0",
+    "python-dotenv==1.0.1",
+    "pyyaml==6.0.1",
+    "pytest==8.2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+    "flake8",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.setuptools.package-dir]
+"" = "."

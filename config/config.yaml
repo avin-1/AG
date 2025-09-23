@@ -1,0 +1,21 @@
+database:
+  postgresql:
+    host: localhost
+    port: 5432
+    dbname: floatchat
+    user: postgres
+    password: 3303
+  chromadb:
+    host: localhost
+    port: 8000
+data:
+  raw_path: data/raw/
+  processed_path: data/processed/
+llm:
+  model: deepseek/deepseek-chat-v3.1:free  # OpenRouter model
+  api_key: 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  # OpenRouter API key
+api:
+  host: 0.0.0.0
+  port: 8000
+frontend:
+  streamlit_port: 8501
