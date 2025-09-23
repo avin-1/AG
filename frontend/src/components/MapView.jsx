@@ -40,9 +40,13 @@ export default function MapView({ profession, onAppendMessage }) {
           {hasMarker && <Marker position={position} />}
         </MapContainer>
       </div>
-      <div className="absolute bottom-4 right-4">
-        <button onClick={fetchNearest} disabled={!hasMarker || loading} className="rounded-lg bg-[#6a4c9c] px-6 py-3 text-white font-semibold hover:bg-opacity-90 shadow-lg disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors">
-          {loading ? 'Fetching...' : 'Fetch'}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-[1000]">
+        <button
+          onClick={fetchNearest}
+          disabled={!hasMarker || loading}
+          className="rounded-lg bg-indigo-600 px-8 py-4 text-white font-semibold hover:bg-indigo-700 shadow-2xl disabled:bg-gray-500 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 disabled:scale-100"
+        >
+          {loading ? 'Fetching...' : 'Fetch Nearest Float'}
         </button>
       </div>
     </div>
