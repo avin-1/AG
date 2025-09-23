@@ -32,16 +32,16 @@ export default function MapView({ profession, onAppendMessage }) {
   }
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col relative">
       <div className="flex-1">
-        <MapContainer center={position} zoom={11} className="h-full">
+        <MapContainer center={position} zoom={11} className="h-full" zoomControl={false}>
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           <ClickableMarker onSet={(pos) => { setPosition(pos); setHasMarker(true); }} />
           {hasMarker && <Marker position={position} />}
         </MapContainer>
       </div>
-      <div className="p-3 border-t flex items-center justify-end bg-white">
-        <button onClick={fetchNearest} disabled={!hasMarker || loading} className="rounded-lg bg-gradient-to-r from-[#7c4dff] to-[#536dfe] px-4 py-2 text-white font-semibold hover:opacity-90 shadow">
+      <div className="absolute bottom-4 right-4">
+        <button onClick={fetchNearest} disabled={!hasMarker || loading} className="rounded-lg bg-[#6a4c9c] px-6 py-3 text-white font-semibold hover:bg-opacity-90 shadow-lg disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors">
           {loading ? 'Fetching...' : 'Fetch'}
         </button>
       </div>

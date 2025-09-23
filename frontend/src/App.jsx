@@ -12,7 +12,7 @@ export default function App() {
   }
 
   return (
-    <div className="h-screen grid grid-cols-[60%_40%] bg-[linear-gradient(180deg,#0b0518_0%,#120b2a_100%)]">
+    <div className="h-screen grid grid-cols-[40%_60%]">
       <LeftPanel
         profession={profession}
         onChangeProfession={setProfession}
@@ -21,8 +21,7 @@ export default function App() {
         messages={messages}
         onSend={(text) => appendMessage('user', text)}
       />
-      <div className="relative bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/80">
-        <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-purple-50" />
+      <div className="relative">
         <MapView
           profession={profession}
           onAppendMessage={(content) => appendMessage('system', content)}
