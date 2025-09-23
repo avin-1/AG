@@ -5,24 +5,28 @@ body {
   font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(to right, #6dd5ed, #2193b0);
+  background: radial-gradient(1200px 800px at -10% -10%, rgba(167,139,250,0.25), transparent 60%),
+              radial-gradient(1000px 600px at 110% 0%, rgba(139,92,246,0.18), transparent 60%),
+              linear-gradient(180deg, #0b0518 0%, #120b2a 100%);
 }
 
 .dashboard {
   display: flex;
   height: 100vh;
-  padding: 20px;
-  gap: 20px;
+  padding: 24px;
+  gap: 24px;
 }
 
 .chat-container {
   flex: 1;
-  padding: 20px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background: rgba(255,255,255,0.06);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
   transition: flex 0.5s ease-in-out;
 }
 
@@ -35,13 +39,39 @@ body {
   gap: 15px;
   margin-bottom: 20px;
 }
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;               /* take remaining vertical space */
+  min-height: 260px;     /* ensure decent area even on small screens */
+  overflow: auto;
+  margin-bottom: 16px;
+  padding-right: 6px;    /* breathing room for scrollbar */
+}
+.message {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+}
+.message-line { margin: 0; }
+
+/* Subtle premium scrollbar */
+.messages::-webkit-scrollbar { width: 8px; height: 8px; }
+.messages::-webkit-scrollbar-track { background: rgba(255,255,255,0.06); border-radius: 8px; }
+.messages::-webkit-scrollbar-thumb { background: rgba(167,139,250,0.45); border-radius: 8px; }
+.messages::-webkit-scrollbar-thumb:hover { background: rgba(139,92,246,0.6); }
 
 .controls select {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
-  background-color: #fff;
+  padding: 12px 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  font-size: 14px;
+  background: rgba(255,255,255,0.06);
+  color: #ffffff;
   flex: 1;
 }
 
@@ -53,35 +83,41 @@ body {
 .chat-input input {
   flex: 1;
   padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px 0 0 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px 0 0 12px;
   font-size: 16px;
   border-right: none;
+  background: rgba(255,255,255,0.06);
+  color: #ffffff;
 }
 
 .chat-input button {
   padding: 12px 25px;
   border: none;
-  background-color: #007bff;
+  background-color: #7c3aed;
   color: white;
   border-radius: 0 8px 8px 0;
   cursor: pointer;
   font-size: 16px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.15s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 24px rgba(124,58,237,0.35);
 }
 
 .chat-input button:hover {
-  background-color: #0056b3;
+  background-color: #8b5cf6;
+  transform: translateY(-1px);
 }
 
 .map-container {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
   transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
 }
 
@@ -97,43 +133,63 @@ body {
 .map-container .leaflet-container {
   flex: 1;
   height: 100%;
-  border-radius: 8px;
+  border-radius: 12px;
+  filter: saturate(1.05) contrast(1.02);
 }
 
 .map-container .map-toggle-button {
   margin-bottom: 15px;
-  padding: 12px;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 .map-container .map-toggle-button:hover {
-    background-color: #0056b3;
 }
 
 .fetch-button {
   margin-top: 15px;
   padding: 12px;
   border: none;
-  background-color: #28a745;
+  background-color: #7c3aed;
   color: white;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.15s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 24px rgba(124,58,237,0.35);
 }
 
 .fetch-button:hover {
-    background-color: #218838;
+    background-color: #8b5cf6;
+    transform: translateY(-1px);
 }
 
 .header {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  justify-content: space-between;
+}
+
+/* Premium purple pill toggle */
+.map-toggle-button {
+  padding: 10px 18px;
+  border: 1px solid rgba(167,139,250,0.35);
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(124,58,237,0.95), rgba(139,92,246,0.95));
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  box-shadow: 0 14px 30px rgba(124,58,237,0.35);
+  transition: background 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
+}
+.map-toggle-button:hover {
+  background: linear-gradient(135deg, rgba(139,92,246,1), rgba(167,139,250,1));
+  transform: translateY(-1px);
+  box-shadow: 0 18px 38px rgba(124,58,237,0.45);
+}
+.map-toggle-button:active { transform: translateY(0); }
+.map-toggle-button:focus-visible {
+  outline: 2px solid rgba(167,139,250,0.9);
+  outline-offset: 2px;
 }
 
 .header img {
@@ -143,7 +199,14 @@ body {
 }
 
 .header h1 {
-  font-size: 24px;
-  color: #333;
+  font-size: 26px;
+  color: #e9ddff;
   margin: 0;
+  letter-spacing: -0.01em;
 }
+
+/* Map top bar for coordinates */
+.map-topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.coords { font-weight: 600; color: #e9ddff; background: rgba(124,58,237,0.18); border: 1px solid rgba(167,139,250,0.35); padding: 8px 12px; border-radius: 9999px; box-shadow: 0 10px 24px rgba(124,58,237,0.25); }
+.coords span { opacity: 0.7; margin-right: 6px; }
+.coords.dims { font-weight: 500; color: rgba(233,221,255,0.7); background: rgba(255,255,255,0.05); border: 1px dashed rgba(167,139,250,0.35); box-shadow: none; }

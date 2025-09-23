@@ -18,6 +18,9 @@ class NearestFloatResponse(BaseModel):
 
 class QueryInput(BaseModel):
     text: str
+    lat: float
+    lon: float
+    profession: str | None = None
 
 class QueryResponse(BaseModel):
     response: str

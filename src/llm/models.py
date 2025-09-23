@@ -6,6 +6,12 @@ from src.utils.logging import get_logger
 import os
 import yaml
 
+# HF Router (OpenAI-compatible client)
+try:
+    from openai import OpenAI as OpenAIClient
+except Exception:  # pragma: no cover
+    OpenAIClient = None  # type: ignore
+
 logger = get_logger(__name__)
 
 class MockLLM(LLM):
@@ -86,3 +92,51 @@ def get_llm(model_type="mock", **kwargs):
         )
     else:
         return MockLLM()
+
+
+def get_hf_router_client():
+    """Return an OpenAI-compatible client configured for Hugging Face Inference Router.
+
+    Requires HF_TOKEN in environment or config.yaml under llm.api_key.
+    """
+    if OpenAIClient is None:
+        logger.warning("openai client package not available; falling back to MockLLM-like behavior")
+        return None
+
+    config = load_config()
+    api_key = os.getenv("HF_TOKEN") or config.get("llm", {}).get("api_key")
+    if not api_key:
+        logger.warning("HF_TOKEN not found; insights will use MockLLM")
+        return None
+    try:
+        client = OpenAIClient(
+            base_url="https://router.huggingface.co/v1",
+            api_key=api_key,
+        )
+        return client
+    except Exception as e:
+        logger.error(f"Failed to init HF Router client: {e}")
+        return None
+
+
+def hf_chat_complete(client, model: str, prompt: str) -> str:
+    """Call HF Router chat.completions with a single user message and return text."""
+    try:
+        completion = client.chat.completions.create(
+            model=model,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        choice = completion.choices[0]
+        content = getattr(choice, "message", None)
+        if content and getattr(content, "content", None):
+            return content.content
+        # Some clients expose .text
+        text = getattr(choice, "text", None)
+        if text:
+            return text
+        return str(completion)
+    except Exception as e:
+        msg = str(e)
+        logger.error(f"HF chat completion failed: {msg}")
+        # Return truncated error to aid debugging from UI
+        return f"Unable to fetch insights at the moment. ({msg[:180]})"
