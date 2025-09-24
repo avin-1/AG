@@ -133,7 +133,7 @@ async def analyze_location(req: NearestFloatRequest):
     insights: str
     client = get_hf_router_client()
     if client is not None:
-        insights = hf_chat_complete(client, model="openai/gpt-oss-120b:fireworks-ai", prompt=prompt)
+        insights = hf_chat_complete(client, model="openai/gpt-oss-20b", prompt=prompt)
     else:
         llm = get_llm(model_type="openrouter")
         try:
@@ -182,7 +182,7 @@ async def ask_with_context(req: QueryInput):
 
     client = get_hf_router_client()
     if client is not None:
-        answer = hf_chat_complete(client, model="openai/gpt-oss-120b:fireworks-ai", prompt=prompt)
+        answer = hf_chat_complete(client, model="openai/gpt-oss-20b", prompt=prompt)
     else:
         llm = get_llm(model_type="openrouter")
         try:

@@ -156,3 +156,5 @@ Developed for Ministry of Earth Sciences (MoES) - INCOIS
 ---
 
 **Built with ❤️ for Ocean Science** 🌊
+
+uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
