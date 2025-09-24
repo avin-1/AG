@@ -17,7 +17,7 @@ FloatChat is an AI-powered conversational interface for ARGO ocean data discover
 - **🗺️ Interactive Visualizations**: Geospatial maps, depth profiles, comparisons
 - **📊 Data Export**: CSV and Parquet export capabilities
 - **🔍 Vector Search**: ChromaDB for intelligent metadata retrieval
-- **📱 Modern UI**: Streamlit-based dashboard and chat interface
+- **📱 Modern UI**: React-based dashboard and chat interface (Vite + React)
 
 ### 🔄 **In Progress**
 
@@ -55,11 +55,13 @@ python src/data_ingestion/metadata_extractor.py
 
 4. **Start Services**
 ```bash
-# Terminal 1: Start API
-python src/api/main.py
+# Terminal 1: Start API (FastAPI)
+python src\api\main.py
 
-# Terminal 2: Start Frontend
-streamlit run src/frontend/chat_interface.py
+# Terminal 2: Start React Frontend (Vite)
+cd frontend
+npm install
+npm run dev
 ```
 
 ## 💬 Example Queries
@@ -75,9 +77,9 @@ The system handles complex oceanographic queries like:
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Streamlit     │    │   FastAPI       │    │   ChromaDB      │
+│    React        │    │   FastAPI       │    │   ChromaDB      │
 │   Frontend      │◄──►│   Backend       │◄──►│   Vector DB     │
-│   (Chat + UI)   │    │   (RAG Pipeline)│    │   (Metadata)    │
+│ (Vite + UI)     │    │   (RAG Pipeline)│    │   (Metadata)    │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
                                 │
                                 ▼
@@ -100,14 +102,14 @@ The system handles complex oceanographic queries like:
 FloatChat/
 ├── src/
 │   ├── api/                 # FastAPI backend
-│   ├── data_ingestion/     # ARGO data processing
-│   ├── database/           # ChromaDB integration
-│   ├── frontend/           # Streamlit UI
-│   ├── llm/                # RAG pipeline & models
-│   └── utils/              # Logging & utilities
-├── config/                 # Configuration files
-├── data/                   # Processed data storage
-└── docs/                   # Documentation
+│   ├── data_ingestion/      # ARGO data processing
+│   ├── database/            # ChromaDB integration
+│   ├── llm/                 # RAG pipeline & models
+│   └── utils/               # Logging & utilities
+├── frontend/                # React UI (Vite)
+├── config/                  # Configuration files
+├── data/                    # Processed data storage
+└── docs/                    # Documentation
 ```
 
 ## 🎨 Visualizations
