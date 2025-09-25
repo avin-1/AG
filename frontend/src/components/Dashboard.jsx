@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
+import AdvancedVisualizations from './AdvancedVisualizations';
 import 'leaflet/dist/leaflet.css';
 
 function ChatInput({ onSend }) {
@@ -120,25 +121,12 @@ const Dashboard = () => {
     };
   }, [isResizing]);
 
-  // Simple visualization component
+  // Enhanced visualization component with real ARGO data
   const VisualizationPanel = () => {
-    const [chartType, setChartType] = useState('map');
-    
-    const loadSampleData = () => {
-      const sampleData = {
-        floats: [
-          { id: '1900022', lat: 10.5, lon: 75.2, temp: 28.5, salinity: 35.2 },
-          { id: '1900033', lat: 12.1, lon: 78.3, temp: 27.8, salinity: 34.9 },
-          { id: '1900034', lat: 8.7, lon: 72.1, temp: 29.1, salinity: 35.5 }
-        ]
-      };
-      setData(sampleData);
-    };
-
     return (
       <div className="visualization-panel">
         <div className="viz-header">
-          <h3>📊 ARGO Data Visualizations</h3>
+          <h3>🌊 Advanced ARGO Data Analysis</h3>
           <button 
             className="close-viz-btn"
             onClick={() => setShowVisualizations(false)}
@@ -147,105 +135,15 @@ const Dashboard = () => {
           </button>
         </div>
         
-        <div className="viz-controls">
-          <button 
-            className={`viz-btn ${chartType === 'map' ? 'active' : ''}`}
-            onClick={() => setChartType('map')}
-          >
-            🗺️ Map View
-          </button>
-          <button 
-            className={`viz-btn ${chartType === 'profile' ? 'active' : ''}`}
-            onClick={() => setChartType('profile')}
-          >
-            📈 Profiles
-          </button>
-          <button 
-            className={`viz-btn ${chartType === 'comparison' ? 'active' : ''}`}
-            onClick={() => setChartType('comparison')}
-          >
-            🔬 Comparison
-          </button>
+        <div className="viz-info">
+          <p>📍 Select a location on the map to analyze the 2 nearest ARGO floats</p>
+          <p>🧠 Get AI-powered comparative analysis and advanced visualizations</p>
         </div>
 
-        {!data && (
-          <div className="load-data-section">
-            <p>Load ARGO data to see visualizations</p>
-            <button className="load-data-btn" onClick={loadSampleData}>
-              Load Sample Data
-            </button>
-          </div>
-        )}
-
-        {data && (
-          <div className="viz-content">
-            {chartType === 'map' && (
-              <div className="map-viz">
-                <h4>ARGO Float Locations</h4>
-                <div className="float-list">
-                  {data.floats.map((float, i) => (
-                    <div key={i} className="float-item">
-                      <strong>Float {float.id}</strong>
-                      <div>Lat: {float.lat}°, Lon: {float.lon}°</div>
-                      <div>Temp: {float.temp}°C, Salinity: {float.salinity} PSU</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-            
-            {chartType === 'profile' && (
-              <div className="profile-viz">
-                <h4>Temperature & Salinity Profiles</h4>
-                <div className="profile-data">
-                  {data.floats.map((float, i) => (
-                    <div key={i} className="profile-item">
-                      <h5>Float {float.id}</h5>
-                      <div className="profile-bars">
-                        <div className="bar">
-                          <span>Temperature: {float.temp}°C</span>
-                          <div className="bar-fill" style={{width: `${(float.temp/30)*100}%`}}></div>
-                        </div>
-                        <div className="bar">
-                          <span>Salinity: {float.salinity} PSU</span>
-                          <div className="bar-fill" style={{width: `${((float.salinity-34)/2)*100}%`}}></div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-            
-            {chartType === 'comparison' && (
-              <div className="comparison-viz">
-                <h4>Float Comparison</h4>
-                <div className="comparison-table">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Float ID</th>
-                        <th>Temperature (°C)</th>
-                        <th>Salinity (PSU)</th>
-                        <th>Location</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {data.floats.map((float, i) => (
-                        <tr key={i}>
-                          <td>{float.id}</td>
-                          <td>{float.temp}</td>
-                          <td>{float.salinity}</td>
-                          <td>{float.lat}°, {float.lon}°</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
+        <AdvancedVisualizations 
+          location={selected || position}
+          profession={profession}
+        />
       </div>
     );
   };
@@ -300,6 +198,7 @@ const Dashboard = () => {
             </div>
           ))}
         </div>
+        {/* Show SQL and nearest platforms if available in last system message meta (we'll append explicitly) */}
         <ChatInput
           onSend={async (text) => {
             if (!text.trim()) return;
@@ -307,13 +206,22 @@ const Dashboard = () => {
             // Optimistically show user question
             setMessages((prev) => [...prev, { role: 'user', content: text }]);
             try {
-              const res = await fetch('/api/ask_with_context', {
+              // Call SQL-enhanced endpoint to also get SQL, data, nearest platforms
+              const res = await fetch('/api/sql_query', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ text, lat, lon: lng, profession: profession.toLowerCase() }),
               });
               const data = await res.json();
-              setMessages((prev) => [...prev, { role: 'system', content: data.response || 'No answer.' }]);
+              const sqlBlock = data.sql ? `\n\nSQL Used:\n\n\`\`\`sql\n${data.sql}\n\`\`\`` : '';
+              const nearest = Array.isArray(data.nearest_platforms) ? data.nearest_platforms.join(', ') : '';
+              const nearestLine = nearest ? `\nNearest Platforms: ${nearest}` : '';
+              const tablePreview = Array.isArray(data.data) && data.data.length > 0
+                ? `\n\nRows: ${data.data.length} (showing up to 3)\n\n` +
+                  '```\n' + JSON.stringify(data.data.slice(0, 3), null, 2) + '\n```'
+                : '';
+              const content = (data.response || 'No answer.') + nearestLine + sqlBlock + tablePreview;
+              setMessages((prev) => [...prev, { role: 'system', content }]);
             } catch (e) {
               setMessages((prev) => [...prev, { role: 'system', content: 'Failed to get answer.' }]);
             }
